@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #0f1116;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  /* Brand palette — mirrors Nafil Mobile's constants/colors.ts (airForceBlue),
+     kept in sync so the marketing site and the app read as one product. */
+  --color-brand-50: #eaf1fb;
+  --color-brand-100: #c9dcf4;
+  --color-brand-200: #a0c2ea;
+  --color-brand-300: #74a6df;
+  --color-brand-400: #4989d3;
+  --color-brand-500: #2a70c7;
+  --color-brand-600: #155cb9;
+  --color-brand-700: #0c51ac;
+  --color-brand-800: #084da5;
+  --color-brand-900: #06316b;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
