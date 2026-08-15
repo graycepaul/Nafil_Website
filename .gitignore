@@ -30,8 +30,16 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# env files — everything except the committed example
 .env*
+!.env.example
+
+# secrets / credentials
+*.key
+*.p12
+*.crt
+credentials.json
+*serviceAccountKey*.json
 
 # vercel
 .vercel
