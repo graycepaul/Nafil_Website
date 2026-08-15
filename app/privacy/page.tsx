@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: "How Nafil Estates collects, uses, and protects your data.",
 };
 
-const LAST_UPDATED = "10 August 2026";
+const LAST_UPDATED = "15 August 2026";
 const SUPPORT_EMAIL = "support@nafilestates.com";
 
 export default function PrivacyPage() {
@@ -112,11 +112,11 @@ export default function PrivacyPage() {
           <h2 className="text-xl font-semibold text-zinc-950">5. Data retention</h2>
           <p className="mt-3">
             We retain your information for as long as your account is active with an estate.
-            Visitor passes and gate logs are kept as an access record for the estate. If you
-            request account deletion, we permanently delete your profile and associated
-            personal data within 30 days, except where we&apos;re required to retain certain
-            records (for example, gate logs already tied to a security incident) for legal or
-            safety reasons.
+            Visitor passes and gate logs are kept as an access record for the estate. Deleting
+            your account from within the App removes your profile and associated personal data
+            immediately. If you request deletion by email instead, we complete it within 30
+            days. Either way, we may retain certain records (for example, gate logs already tied
+            to a security incident) where required for legal or safety reasons.
           </p>
         </section>
 
@@ -128,8 +128,10 @@ export default function PrivacyPage() {
               can view and update most of your profile information directly in the App.
             </li>
             <li>
-              <span className="font-medium text-zinc-950">Account deletion:</span> email{" "}
-              {SUPPORT_EMAIL} to request deletion of your account and personal data. See our{" "}
+              <span className="font-medium text-zinc-950">Account deletion:</span> delete your
+              account directly from the App under Settings &rarr; Delete my account, which
+              permanently deletes your profile and associated personal data immediately. You can
+              also email {SUPPORT_EMAIL} to request deletion instead. See our{" "}
               <a href="/contact" className="font-medium text-brand-800 underline">
                 Support
               </a>{" "}
