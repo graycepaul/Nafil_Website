@@ -22,9 +22,13 @@ const FAQS = [
   {
     question: "How do I delete my account and data?",
     answer:
-      "Email us at " +
+      "Open the App, go to Settings, and tap 'Delete my account'. This immediately and " +
+      "permanently deletes your profile, visitor passes, issues, and any other personal data " +
+      "tied to your account. This can't be undone. If you'd rather not use the App, email us " +
+      "at " +
       SUPPORT_EMAIL +
-      " from the address on your account, or ask your estate admin to remove you, and we'll permanently delete your profile, visitor passes, issues, and any other personal data tied to your account within 30 days. This can't be undone.",
+      " from the address on your account, or ask your estate admin to remove you, and we'll " +
+      "delete it within 30 days instead.",
   },
   {
     question: "I found a bug or something's broken.",
