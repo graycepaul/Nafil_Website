@@ -4,6 +4,7 @@ import { APP_LOGIN_URL } from "@/lib/config";
 
 const NAV_LINKS = [
   { href: "/about", label: "About" },
+  { href: "/download", label: "Download" },
   { href: "/contact", label: "Support" },
 ];
 
