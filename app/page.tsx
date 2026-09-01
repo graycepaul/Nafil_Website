@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { APP_LOGIN_URL } from "@/lib/config";
 
 const FEATURES = [
   {
@@ -50,16 +51,16 @@ export default function Home() {
           </p>
           <div className="mt-10 flex flex-col gap-4 sm:flex-row">
             <Link
-              href="/contact"
+              href={APP_LOGIN_URL}
               className="rounded-full bg-brand-800 px-8 py-3 text-base font-semibold text-white transition-colors hover:bg-brand-700"
             >
-              Get in touch
+              Get started
             </Link>
             <Link
-              href="/about"
+              href="/contact"
               className="rounded-full border border-zinc-200 px-8 py-3 text-base font-semibold text-zinc-950 transition-colors hover:border-brand-800 hover:text-brand-800"
             >
-              Learn more
+              Get in touch
             </Link>
           </div>
         </div>
