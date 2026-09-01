@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { APP_LOGIN_URL } from "@/lib/config";
 
 const NAV_LINKS = [
   { href: "/about", label: "About" },
@@ -28,10 +29,10 @@ export function Header() {
             </Link>
           ))}
           <Link
-            href="/contact"
+            href={APP_LOGIN_URL}
             className="rounded-full bg-brand-800 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand-700"
           >
-            Get in touch
+            Get started
           </Link>
         </nav>
       </div>
