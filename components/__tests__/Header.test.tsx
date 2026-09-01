@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { Header } from "../Header";
+import { APP_LOGIN_URL } from "../../lib/config";
 
 describe("Header", () => {
   it("renders the brand link and nav links", () => {
@@ -8,9 +9,9 @@ describe("Header", () => {
     expect(screen.getByRole("link", { name: /nafil estates/i })).toHaveAttribute("href", "/");
     expect(screen.getByRole("link", { name: "About" })).toHaveAttribute("href", "/about");
     expect(screen.getByRole("link", { name: "Support" })).toHaveAttribute("href", "/contact");
-    expect(screen.getByRole("link", { name: "Get in touch" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Get started" })).toHaveAttribute(
       "href",
-      "/contact"
+      APP_LOGIN_URL
     );
   });
 });
