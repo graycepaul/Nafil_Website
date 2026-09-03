@@ -6,11 +6,11 @@ import { APP_LOGIN_URL } from "@/lib/config";
 export const metadata: Metadata = {
   title: "Download",
   description:
-    "Get Nafil Estates on your phone, tablet, or computer. Direct Android download available now; an App Store release is coming soon — until then, the full app runs in your browser.",
+    "Get Nafil Estates on your phone, tablet, or computer. Android download available now, with App Store and Google Play listings coming soon.",
 };
 
 /**
- * A direct APK from an EAS "preview" (internal-distribution) build — Android
+ * A direct APK from an EAS "preview" (internal-distribution) build. Android
  * doesn't require the Play Store, just "install from unknown sources", same
  * as arbinx.com/download. Hosted on Expo's own build-artifact storage for
  * now rather than self-hosted; those URLs can expire on Expo's free tier
@@ -42,9 +42,8 @@ export default function DownloadPage() {
             Get Nafil Estates on your phone
           </h1>
           <p className="mt-6 max-w-xl text-lg text-zinc-600">
-            Not on the App Store or Google Play yet, but Android doesn&apos;t need either —
-            download it directly below. On iPhone (or anywhere else), the full app runs right
-            in your browser.
+            Available now for Android. App Store and Google Play listings are coming soon.
+            Prefer not to install anything? The full app runs right in your browser.
           </p>
           <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row">
             <Link
@@ -69,8 +68,8 @@ export default function DownloadPage() {
           Installing the Android download
         </h2>
         <p className="mx-auto mt-3 max-w-lg text-center text-sm text-zinc-500">
-          Since this isn&apos;t from the Play Store, Android will ask you to confirm the
-          install — that warning is normal and expected. Nafil Estates is safe.
+          Since this isn&apos;t from the Play Store yet, Android will ask you to confirm the
+          install. That warning is normal and expected: Nafil Estates is safe.
         </p>
         <ol className="mx-auto mt-10 max-w-md space-y-6">
           {[
@@ -95,8 +94,7 @@ export default function DownloadPage() {
             Built for residents, security, and estate admins
           </h2>
           <p className="mt-4 text-base text-zinc-600">
-            Same app, three different jobs — sign in and you&apos;ll land on the one built for
-            yours.
+            One app, three experiences. Sign in and you&apos;ll land on the one built for you.
           </p>
         </div>
 
@@ -123,10 +121,10 @@ export default function DownloadPage() {
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             <span className="rounded-full border border-zinc-200 bg-white px-6 py-3 text-sm font-semibold text-zinc-400">
-              App Store — coming soon
+              App Store: Coming soon
             </span>
             <span className="rounded-full border border-zinc-200 bg-white px-6 py-3 text-sm font-semibold text-zinc-400">
-              Google Play — coming soon
+              Google Play: Coming soon
             </span>
           </div>
         </div>
@@ -136,8 +134,8 @@ export default function DownloadPage() {
         <div className="mx-auto flex max-w-6xl flex-col items-center px-6 py-20 text-center">
           <h2 className="text-3xl font-bold tracking-tight text-white">Ready when you are</h2>
           <p className="mt-4 max-w-xl text-base text-brand-100">
-            Download it on Android, or sign in through the web app on anything else — same
-            Nafil Estates experience either way.
+            Download it on Android, or sign in through the web app on anything else. Same
+            experience, either way.
           </p>
           <div className="mt-8 flex flex-col gap-4 sm:flex-row">
             <Link
