@@ -18,7 +18,7 @@ export const metadata: Metadata = {
  * (`eas build -p android --profile preview`) and swap in its Application
  * Archive URL from `eas build:list`.
  */
-const ANDROID_APK_URL = "https://expo.dev/artifacts/eas/4fu1XSe0sPRcpYXYBa_HylbugNX4sLDwCNxx6njBjfs.apk";
+const ANDROID_APK_URL = "https://expo.dev/artifacts/eas/vSDc6oXXXO2VwjiMzkj7v6n-EiGdpJM0dqqiVJs9i1c.apk";
 
 const SCREENSHOTS = [
   { src: "/download/resident-home.png", alt: "Resident home screen in Nafil Estates", label: "Residents" },
