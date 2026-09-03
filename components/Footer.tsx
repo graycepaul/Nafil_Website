@@ -5,6 +5,7 @@ const FOOTER_LINKS = [
     heading: "Product",
     links: [
       { href: "/about", label: "About" },
+      { href: "/download", label: "Download" },
       { href: "/contact", label: "Support" },
     ],
   },
