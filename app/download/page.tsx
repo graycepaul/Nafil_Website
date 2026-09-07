@@ -6,19 +6,23 @@ import { APP_LOGIN_URL } from "@/lib/config";
 export const metadata: Metadata = {
   title: "Download",
   description:
-    "Get Nafil Estates on your phone, tablet, or computer. Direct Android download available now; an App Store release is coming soon — until then, the full app runs in your browser.",
+    "Get Nafil Estates on your phone. Available now on the App Store; Android downloads directly until the Play Store listing is public.",
 };
 
+/** Live App Store listing - update if the numeric app id ever changes. */
+const IOS_APP_STORE_URL = "https://apps.apple.com/us/app/nafil-estates/id6801795360";
+
 /**
- * A direct APK from an EAS "preview" (internal-distribution) build — Android
- * doesn't require the Play Store, just "install from unknown sources", same
- * as arbinx.com/download. Hosted on Expo's own build-artifact storage for
- * now rather than self-hosted; those URLs can expire on Expo's free tier
- * (commonly ~30 days), so if this stops resolving, cut a fresh build
- * (`eas build -p android --profile preview`) and swap in its Application
- * Archive URL from `eas build:list`.
+ * A direct APK from an EAS "preview" (internal-distribution) build. The
+ * Play Store listing is still in closed testing, so this is how an Android
+ * user gets the app in the meantime - no Play Store account needed, just
+ * "install from unknown sources", same as arbinx.com/download. Hosted on
+ * Expo's own build-artifact storage for now rather than self-hosted; those
+ * URLs can expire on Expo's free tier (commonly ~30 days), so if this stops
+ * resolving, cut a fresh build (`eas build -p android --profile preview`)
+ * and swap in its Application Archive URL from `eas build:list`.
  */
-const ANDROID_APK_URL = "https://expo.dev/artifacts/eas/vSDc6oXXXO2VwjiMzkj7v6n-EiGdpJM0dqqiVJs9i1c.apk";
+const ANDROID_APK_URL = "https://expo.dev/artifacts/eas/tnIE0Vwlndzabsv__T9nffdwsbiZaSX2rZ6dsSjj2xY.apk";
 
 const SCREENSHOTS = [
   { src: "/download/resident-home.png", alt: "Resident home screen in Nafil Estates", label: "Residents" },
@@ -42,25 +46,30 @@ export default function DownloadPage() {
             Get Nafil Estates on your phone
           </h1>
           <p className="mt-6 max-w-xl text-lg text-zinc-600">
-            Not on the App Store or Google Play yet, but Android doesn&apos;t need either —
-            download it directly below. On iPhone (or anywhere else), the full app runs right
-            in your browser.
+            Available now on the App Store. The Play Store listing is still in closed testing, so
+            Android downloads directly below in the meantime. Prefer not to install anything? The
+            full app runs right in your browser.
           </p>
           <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row">
             <Link
-              href={ANDROID_APK_URL}
+              href={IOS_APP_STORE_URL}
               className="rounded-full bg-brand-800 px-8 py-3 text-base font-semibold text-white transition-colors hover:bg-brand-700"
+            >
+              Download for iPhone
+            </Link>
+            <Link
+              href={ANDROID_APK_URL}
+              className="rounded-full border border-zinc-200 px-8 py-3 text-base font-semibold text-zinc-950 transition-colors hover:border-brand-800 hover:text-brand-800"
             >
               Download for Android
             </Link>
-            <Link
-              href={APP_LOGIN_URL}
-              className="rounded-full border border-zinc-200 px-8 py-3 text-base font-semibold text-zinc-950 transition-colors hover:border-brand-800 hover:text-brand-800"
-            >
-              Open the web app
-            </Link>
           </div>
-          <p className="mt-4 text-sm text-zinc-500">Android 8.0 and above.</p>
+          <p className="mt-4 text-sm text-zinc-500">
+            <Link href={APP_LOGIN_URL} className="underline underline-offset-2 hover:text-brand-800">
+              Or open the web app
+            </Link>{" "}
+            on anything else.
+          </p>
         </div>
       </section>
 
@@ -69,8 +78,8 @@ export default function DownloadPage() {
           Installing the Android download
         </h2>
         <p className="mx-auto mt-3 max-w-lg text-center text-sm text-zinc-500">
-          Since this isn&apos;t from the Play Store, Android will ask you to confirm the
-          install — that warning is normal and expected. Nafil Estates is safe.
+          Since this isn&apos;t from the Play Store yet, Android will ask you to confirm the
+          install. That warning is normal and expected: Nafil Estates is safe.
         </p>
         <ol className="mx-auto mt-10 max-w-md space-y-6">
           {[
@@ -95,8 +104,7 @@ export default function DownloadPage() {
             Built for residents, security, and estate admins
           </h2>
           <p className="mt-4 text-base text-zinc-600">
-            Same app, three different jobs — sign in and you&apos;ll land on the one built for
-            yours.
+            One app, three experiences. Sign in and you&apos;ll land on the one built for you.
           </p>
         </div>
 
@@ -115,18 +123,21 @@ export default function DownloadPage() {
       <section className="bg-zinc-50">
         <div className="mx-auto max-w-6xl px-6 py-20 text-center">
           <h2 className="text-2xl font-bold tracking-tight text-zinc-950">
-            Coming soon to the app stores
+            On the App Store now, Google Play coming soon
           </h2>
           <p className="mx-auto mt-3 max-w-md text-sm text-zinc-500">
-            Official listings on the App Store and Google Play are on the way. We&apos;ll link
-            them here the moment they&apos;re live.
+            The official Play Store listing is in closed testing. We&apos;ll link it here the
+            moment it&apos;s public.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+            <Link
+              href={IOS_APP_STORE_URL}
+              className="rounded-full border border-brand-800 bg-white px-6 py-3 text-sm font-semibold text-brand-800 transition-colors hover:bg-brand-50"
+            >
+              App Store: Live now
+            </Link>
             <span className="rounded-full border border-zinc-200 bg-white px-6 py-3 text-sm font-semibold text-zinc-400">
-              App Store — coming soon
-            </span>
-            <span className="rounded-full border border-zinc-200 bg-white px-6 py-3 text-sm font-semibold text-zinc-400">
-              Google Play — coming soon
+              Google Play: Coming soon
             </span>
           </div>
         </div>
@@ -136,21 +147,21 @@ export default function DownloadPage() {
         <div className="mx-auto flex max-w-6xl flex-col items-center px-6 py-20 text-center">
           <h2 className="text-3xl font-bold tracking-tight text-white">Ready when you are</h2>
           <p className="mt-4 max-w-xl text-base text-brand-100">
-            Download it on Android, or sign in through the web app on anything else — same
-            Nafil Estates experience either way.
+            Download it on iPhone or Android, or sign in through the web app on anything else.
+            Same experience, either way.
           </p>
           <div className="mt-8 flex flex-col gap-4 sm:flex-row">
             <Link
-              href={ANDROID_APK_URL}
+              href={IOS_APP_STORE_URL}
               className="rounded-full bg-white px-8 py-3 text-base font-semibold text-brand-800 transition-colors hover:bg-brand-50"
             >
-              Download for Android
+              Download for iPhone
             </Link>
             <Link
-              href={APP_LOGIN_URL}
+              href={ANDROID_APK_URL}
               className="rounded-full border border-white/40 px-8 py-3 text-base font-semibold text-white transition-colors hover:bg-white/10"
             >
-              Open the web app
+              Download for Android
             </Link>
           </div>
         </div>

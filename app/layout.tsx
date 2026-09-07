@@ -19,16 +19,16 @@ const siteUrl = "https://nafilestates.com";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Nafil Estates — Gate access and estate management",
+    default: "Nafil Estates: Gate access and estate management",
     template: "%s | Nafil Estates",
   },
   description:
-    "Nafil Estates is a gate access and estate management app for gated communities — visitor passes, issue reporting, announcements, and secure gate check-in.",
+    "Nafil Estates is a gate access and estate management app for gated communities, with visitor passes, issue reporting, announcements, and secure gate check-in.",
   icons: {
     icon: "/favicon.png",
   },
   openGraph: {
-    title: "Nafil Estates — Gate access and estate management",
+    title: "Nafil Estates: Gate access and estate management",
     description:
       "Visitor passes, issue reporting, announcements, and secure gate check-in for gated communities.",
     url: siteUrl,
