@@ -47,6 +47,12 @@ export default function PrivacyPage() {
               admin).
             </li>
             <li>
+              <span className="font-medium text-zinc-950">Identity verification:</span> when
+              you request to join an estate, a photo of a utility bill, NIN card, or service ID
+              card (plus a service number for military personnel), used only to confirm your
+              identity and unit before an estate admin approves your request.
+            </li>
+            <li>
               <span className="font-medium text-zinc-950">Visitor and household data:</span>{" "}
               names, phone numbers, and vehicle plate numbers of visitors and household
               members you register for gate access, and photos for household/frequent-visitor
@@ -69,9 +75,10 @@ export default function PrivacyPage() {
             </li>
             <li>
               <span className="font-medium text-zinc-950">Camera and photos:</span> the App
-              requests camera access to scan visitor QR codes, and photo library access so
-              you can set a profile picture or attach photos to an issue report. We only
-              access these when you actively use those features.
+              requests camera access to scan visitor QR codes, and photo library access so you
+              can set a profile picture, attach photos to an issue report, or submit an
+              identity document when joining an estate. We only access these when you actively
+              use those features.
             </li>
           </ul>
         </section>
@@ -96,8 +103,11 @@ export default function PrivacyPage() {
             Security officers at your estate can see visitor passes, household member codes,
             and gate check-in logs, so they can verify who&apos;s allowed through the gate.
             Estate admins can see resident directory information, issue reports, and
-            announcements for their estate. We do not sell your personal information, and we
-            do not share it with third parties for their own marketing purposes.
+            announcements for their estate. Identity verification documents are visible only
+            to the admin reviewing your join request, are stored separately from other App
+            data, and are never shown to other residents. We do not sell your personal
+            information, and we do not share it with third parties for their own marketing
+            purposes.
           </p>
           <p className="mt-3">
             We use third-party service providers to run the App, including Supabase for
