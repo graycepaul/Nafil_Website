@@ -11,7 +11,7 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
-  /* Brand palette — mirrors Nafil Mobile's constants/colors.ts (airForceBlue),
+  /* Brand palette - mirrors Nafil Mobile's constants/colors.ts (airForceBlue),
      kept in sync so the marketing site and the app read as one product. */
   --color-brand-50: #eaf1fb;
   --color-brand-100: #c9dcf4;
