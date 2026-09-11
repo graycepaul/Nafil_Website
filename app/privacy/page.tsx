@@ -48,9 +48,10 @@ export default function PrivacyPage() {
             </li>
             <li>
               <span className="font-medium text-zinc-950">Identity verification:</span> when
-              you request to join an estate, a photo of a utility bill, NIN card, or service ID
-              card (plus a service number for military personnel), used only to confirm your
-              identity and unit before an estate admin approves your request.
+              you request to join an estate, a photo of a Receipt of Service Charge or HAFVERA
+              dues (civilian residents), or a Service ID or Accommodation Publication (plus a
+              service number, for military personnel), used only to confirm your identity and
+              unit before an estate admin approves your request.
             </li>
             <li>
               <span className="font-medium text-zinc-950">Visitor and household data:</span>{" "}
