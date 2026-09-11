@@ -22,7 +22,7 @@ const IOS_APP_STORE_URL = "https://apps.apple.com/us/app/nafil-estates/id6801795
  * resolving, cut a fresh build (`eas build -p android --profile preview`)
  * and swap in its Application Archive URL from `eas build:list`.
  */
-const ANDROID_APK_URL = "https://expo.dev/artifacts/eas/tnIE0Vwlndzabsv__T9nffdwsbiZaSX2rZ6dsSjj2xY.apk";
+const ANDROID_APK_URL = "https://expo.dev/artifacts/eas/NQrYb14xLXmRdwOxStBbk_6OsiUKYug8CjDN3x-znt4.apk";
 
 const SCREENSHOTS = [
   { src: "/download/resident-home.png", alt: "Resident home screen in Nafil Estates", label: "Residents" },
