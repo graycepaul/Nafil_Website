@@ -29,7 +29,10 @@ export type Overview = {
   };
 };
 
+export type TestSource = "rule" | "manual" | null;
+
 export type EstateRow = {
+  test_source: TestSource;
   id: string;
   name: string;
   created_at: string;
@@ -51,4 +54,5 @@ export type UserRow = {
   estate: string | null;
   created_at: string;
   last_sign_in_at: string | null;
+  test_source: TestSource;
 };

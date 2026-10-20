@@ -4,8 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
-import { DevControlApiError, devControlFetch, supabase } from "@/lib/devcontrol/client";
-import type { EstateRow, Overview, Scope, UserRow } from "@/lib/devcontrol/types";
+import { DevControlApiError, devControlFetch, setTestFlag, supabase } from "@/lib/devcontrol/client";
+import type { EstateRow, Overview, Scope, TestSource, UserRow } from "@/lib/devcontrol/types";
 import { formatBytes, formatDate, formatDuration, formatRelative } from "./format";
 
 type Tab = "overview" | "estates" | "users";
@@ -172,8 +172,8 @@ function Dashboard({ email, scope }: { email: string; scope: Scope }) {
           {error && <p className="mt-6 text-sm text-red-600">{error}</p>}
           {!overview && !error && <p className="mt-6 text-sm text-zinc-500">Loading...</p>}
           {overview && tab === "overview" && <OverviewTab data={overview} />}
-          {tab === "estates" && <EstatesTab rows={estates} />}
-          {tab === "users" && <UsersTab rows={users} />}
+          {tab === "estates" && <EstatesTab rows={estates} scope={scope} onChanged={load} />}
+          {tab === "users" && <UsersTab rows={users} scope={scope} onChanged={load} />}
         </>
       )}
     </div>
@@ -356,13 +356,66 @@ function Metric({ label, value }: { label: string; value: string }) {
   );
 }
 
-function EstatesTab({ rows }: { rows: EstateRow[] }) {
+function FlagButton({
+  kind,
+  id,
+  name,
+  scope,
+  source,
+  onChanged,
+}: {
+  kind: "user" | "estate";
+  id: string;
+  name: string;
+  scope: Scope;
+  source: TestSource;
+  onChanged: () => void;
+}) {
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState(false);
+
+  // Rule-matched entries (a @nafil.test email, Demo Gardens, dev admins) are
+  // test by definition and can't be moved back from here.
+  if (source === "rule") return <span className="text-xs text-zinc-400">Auto</span>;
+
+  const toTest = scope === "live";
+  const label = toTest ? "Mark as test" : "Move to live";
+  const detail = kind === "estate" ? " and everyone in it" : "";
+  const prompt = toTest
+    ? `Mark ${name}${detail} as test data? It will be excluded from live figures.`
+    : `Move ${name}${detail} back to live data?`;
+
+  async function click() {
+    if (!window.confirm(prompt)) return;
+    setBusy(true);
+    setError(false);
+    try {
+      await setTestFlag(kind, id, toTest);
+      onChanged();
+    } catch {
+      setError(true);
+    }
+    setBusy(false);
+  }
+
+  return (
+    <button
+      onClick={click}
+      disabled={busy}
+      className="whitespace-nowrap rounded-md border border-zinc-300 px-2 py-1 text-xs hover:bg-zinc-100 disabled:opacity-60"
+    >
+      {error ? "Failed, retry" : busy ? "Saving..." : label}
+    </button>
+  );
+}
+
+function EstatesTab({ rows, scope, onChanged }: { rows: EstateRow[]; scope: Scope; onChanged: () => void }) {
   return (
     <div className="mt-6 overflow-x-auto rounded-xl bg-white ring-1 ring-zinc-200">
       <table className="w-full text-sm">
         <thead className="bg-zinc-50 text-left text-xs text-zinc-500">
           <tr>
-            {["Estate", "Created", "Members", "Approved", "Issues", "Visitor passes", "Announcements", "Listings", "Pending requests"].map((h) => (
+            {["Estate", "Created", "Members", "Approved", "Issues", "Visitor passes", "Announcements", "Listings", "Pending requests", ""].map((h) => (
               <th key={h} className="px-4 py-3 font-medium">
                 {h}
               </th>
@@ -381,6 +434,9 @@ function EstatesTab({ rows }: { rows: EstateRow[] }) {
               <td className="px-4 py-3">{r.announcements}</td>
               <td className="px-4 py-3">{r.listings}</td>
               <td className="px-4 py-3">{r.pending_requests}</td>
+              <td className="px-4 py-3 text-right">
+                <FlagButton kind="estate" id={r.id} name={r.name} scope={scope} source={r.test_source} onChanged={onChanged} />
+              </td>
             </tr>
           ))}
         </tbody>
@@ -389,7 +445,7 @@ function EstatesTab({ rows }: { rows: EstateRow[] }) {
   );
 }
 
-function UsersTab({ rows }: { rows: UserRow[] }) {
+function UsersTab({ rows, scope, onChanged }: { rows: UserRow[]; scope: Scope; onChanged: () => void }) {
   const [query, setQuery] = useState("");
   const q = query.trim().toLowerCase();
   const filtered = q
@@ -411,7 +467,7 @@ function UsersTab({ rows }: { rows: UserRow[] }) {
         <table className="w-full text-sm">
           <thead className="bg-zinc-50 text-left text-xs text-zinc-500">
             <tr>
-              {["Name", "Email", "Role", "Estate", "Approved", "Joined", "Last sign-in"].map((h) => (
+              {["Name", "Email", "Role", "Estate", "Approved", "Joined", "Last sign-in", ""].map((h) => (
                 <th key={h} className="px-4 py-3 font-medium">
                   {h}
                 </th>
@@ -428,6 +484,16 @@ function UsersTab({ rows }: { rows: UserRow[] }) {
                 <td className="px-4 py-3">{r.approved ? "Yes" : "No"}</td>
                 <td className="px-4 py-3">{formatDate(r.created_at)}</td>
                 <td className="px-4 py-3">{formatRelative(r.last_sign_in_at)}</td>
+                <td className="px-4 py-3 text-right">
+                  <FlagButton
+                    kind="user"
+                    id={r.id}
+                    name={r.email ?? r.full_name ?? "this account"}
+                    scope={scope}
+                    source={r.test_source}
+                    onChanged={onChanged}
+                  />
+                </td>
               </tr>
             ))}
           </tbody>
