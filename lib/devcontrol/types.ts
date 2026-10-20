@@ -1,4 +1,8 @@
+export type Scope = "live" | "test";
+
 export type Overview = {
+  scope: Scope;
+  other_scope: { users: number; estates: number };
   users: {
     total: number;
     confirmed: number;
@@ -25,7 +29,10 @@ export type Overview = {
   };
 };
 
+export type TestSource = "rule" | "manual" | null;
+
 export type EstateRow = {
+  test_source: TestSource;
   id: string;
   name: string;
   created_at: string;
@@ -47,4 +54,5 @@ export type UserRow = {
   estate: string | null;
   created_at: string;
   last_sign_in_at: string | null;
+  test_source: TestSource;
 };

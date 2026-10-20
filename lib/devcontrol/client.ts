@@ -31,19 +31,31 @@ export class DevControlApiError extends Error {
   }
 }
 
-export async function devControlFetch<T>(path: string): Promise<T> {
+export async function devControlFetch<T>(path: string, scope: "live" | "test"): Promise<T> {
   const { data } = await supabase.auth.getSession();
   const token = data.session?.access_token;
   if (!token) throw new DevControlApiError(401, "Not signed in");
-  const res = await fetch(`${API_URL}/devcontrol${path}`, {
+  const res = await fetch(`${API_URL}/devcontrol${path}?scope=${scope}`, {
     headers: { Authorization: `Bearer ${token}` },
     cache: "no-store",
   });
   if (!res.ok) {
     throw new DevControlApiError(
       res.status,
-      res.status === 403 ? "This account is not a super admin" : `Request failed (${res.status})`,
+      res.status === 403 ? "This account is not a dev admin" : `Request failed (${res.status})`,
     );
   }
   return res.json() as Promise<T>;
+}
+
+export async function setTestFlag(kind: "user" | "estate", id: string, test: boolean): Promise<void> {
+  const { data } = await supabase.auth.getSession();
+  const token = data.session?.access_token;
+  if (!token) throw new DevControlApiError(401, "Not signed in");
+  const res = await fetch(`${API_URL}/devcontrol/flags`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+    body: JSON.stringify({ kind, id, test }),
+  });
+  if (!res.ok) throw new DevControlApiError(res.status, `Request failed (${res.status})`);
 }
