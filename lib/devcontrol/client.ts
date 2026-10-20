@@ -31,11 +31,11 @@ export class DevControlApiError extends Error {
   }
 }
 
-export async function devControlFetch<T>(path: string): Promise<T> {
+export async function devControlFetch<T>(path: string, scope: "live" | "test"): Promise<T> {
   const { data } = await supabase.auth.getSession();
   const token = data.session?.access_token;
   if (!token) throw new DevControlApiError(401, "Not signed in");
-  const res = await fetch(`${API_URL}/devcontrol${path}`, {
+  const res = await fetch(`${API_URL}/devcontrol${path}?scope=${scope}`, {
     headers: { Authorization: `Bearer ${token}` },
     cache: "no-store",
   });

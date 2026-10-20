@@ -1,14 +1,16 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { DevControlApiError, devControlFetch, supabase } from "@/lib/devcontrol/client";
-import type { EstateRow, Overview, UserRow } from "@/lib/devcontrol/types";
+import type { EstateRow, Overview, Scope, UserRow } from "@/lib/devcontrol/types";
 import { formatBytes, formatDate, formatDuration, formatRelative } from "./format";
 
 type Tab = "overview" | "estates" | "users";
 
-export function DevControl() {
+export function DevControl({ scope = "live" }: { scope?: Scope }) {
   const [session, setSession] = useState<Session | null>(null);
   const [ready, setReady] = useState(false);
 
@@ -23,7 +25,7 @@ export function DevControl() {
 
   if (!ready) return null;
   if (!session) return <SignIn />;
-  return <Dashboard email={session.user.email ?? ""} />;
+  return <Dashboard email={session.user.email ?? ""} scope={scope} />;
 }
 
 function SignIn() {
@@ -83,7 +85,7 @@ function SignIn() {
   );
 }
 
-function Dashboard({ email }: { email: string }) {
+function Dashboard({ email, scope }: { email: string; scope: Scope }) {
   const [tab, setTab] = useState<Tab>("overview");
   const [overview, setOverview] = useState<Overview | null>(null);
   const [estates, setEstates] = useState<EstateRow[]>([]);
@@ -96,9 +98,9 @@ function Dashboard({ email }: { email: string }) {
     setError(null);
     try {
       const [o, e, u] = await Promise.all([
-        devControlFetch<Overview>("/overview"),
-        devControlFetch<EstateRow[]>("/estates"),
-        devControlFetch<UserRow[]>("/users"),
+        devControlFetch<Overview>("/overview", scope),
+        devControlFetch<EstateRow[]>("/estates", scope),
+        devControlFetch<UserRow[]>("/users", scope),
       ]);
       setOverview(o);
       setEstates(e);
@@ -108,7 +110,7 @@ function Dashboard({ email }: { email: string }) {
       if (err instanceof DevControlApiError && err.status === 403) setForbidden(true);
       else setError(err instanceof Error ? err.message : "Something went wrong");
     }
-  }, []);
+  }, [scope]);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -144,13 +146,15 @@ function Dashboard({ email }: { email: string }) {
         </div>
       </header>
 
+      <ScopeSwitch scope={scope} other={overview?.other_scope} />
+
       {forbidden ? (
         <p className="mt-10 rounded-xl bg-white p-6 text-sm text-zinc-700 ring-1 ring-zinc-200">
           This account does not have super admin access.
         </p>
       ) : (
         <>
-          <nav className="mt-6 flex gap-1 border-b border-zinc-200">
+          <nav className="mt-4 flex gap-1 border-b border-zinc-200">
             {tabs.map((t) => (
               <button
                 key={t.id}
@@ -171,6 +175,45 @@ function Dashboard({ email }: { email: string }) {
           {tab === "estates" && <EstatesTab rows={estates} />}
           {tab === "users" && <UsersTab rows={users} />}
         </>
+      )}
+    </div>
+  );
+}
+
+function ScopeSwitch({ scope, other }: { scope: Scope; other?: { users: number; estates: number } }) {
+  // On devadmin.* the proxy rewrites "/" and "/test" into /devcontrol, so links
+  // stay relative to whichever prefix the browser is currently using.
+  const pathname = usePathname();
+  const base = pathname.startsWith("/devcontrol") ? "/devcontrol" : "";
+  const items: { id: Scope; label: string; href: string }[] = [
+    { id: "live", label: "Live data", href: base || "/" },
+    { id: "test", label: "Test data", href: `${base}/test` },
+  ];
+  return (
+    <div className="mt-6 flex flex-wrap items-center gap-3">
+      <div className="inline-flex rounded-lg bg-zinc-200 p-1 text-sm">
+        {items.map((i) => (
+          <Link
+            key={i.id}
+            href={i.href}
+            className={`rounded-md px-3 py-1 font-medium ${
+              scope === i.id ? "bg-white text-zinc-950 shadow-sm" : "text-zinc-600 hover:text-zinc-900"
+            }`}
+          >
+            {i.label}
+          </Link>
+        ))}
+      </div>
+      {scope === "test" ? (
+        <span className="rounded-md bg-amber-100 px-2 py-1 text-xs font-medium text-amber-900">
+          Test accounts and demo estates only. Not counted in live figures.
+        </span>
+      ) : (
+        other && (
+          <span className="text-xs text-zinc-500">
+            {other.users} test accounts and {other.estates} test estate{other.estates === 1 ? "" : "s"} excluded
+          </span>
+        )
       )}
     </div>
   );

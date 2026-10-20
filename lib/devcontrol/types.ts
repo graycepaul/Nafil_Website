@@ -1,4 +1,8 @@
+export type Scope = "live" | "test";
+
 export type Overview = {
+  scope: Scope;
+  other_scope: { users: number; estates: number };
   users: {
     total: number;
     confirmed: number;
