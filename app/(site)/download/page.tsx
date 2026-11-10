@@ -17,7 +17,7 @@ const ANDROID_PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=co
 
 const SCREENSHOTS = [
   { src: "/download/resident-home.png", alt: "Resident home screen in Nafil Estates", label: "Residents" },
-  { src: "/download/admin-dashboard.png", alt: "Estate admin dashboard in Nafil Estates", label: "Estate admins" },
+  { src: "/download/visitor-pass.png", alt: "Visitor pass screen in Nafil Estates", label: "Visitor passes" },
   { src: "/download/security-scan.png", alt: "Security gate scan screen in Nafil Estates", label: "Security" },
 ];
 
